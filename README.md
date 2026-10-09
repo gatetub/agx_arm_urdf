@@ -1,29 +1,29 @@
-# AgileX 机械臂 URDF 模型
+# AgileX Robotic Arm URDF Models
 
-[English](./README_EN.md)
+[中文](./README.md)
 
-本仓库包含 AgileX 系列机械臂的 URDF / Xacro 模型文件及对应的 3D 网格（mesh）资源，供 ROS / ROS2 可视化、仿真和运动规划使用。
+This repository contains the URDF / Xacro model files and the corresponding 3D mesh assets for AgileX robotic arms, for use in ROS / ROS2 visualization, simulation, and motion planning.
 
-> **定位说明**：本仓库**主要服务于** [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros) 主仓库（作为其中的子模块，与主仓内的 `agx_arm_description` 功能包一同安装）。  
-> 若你仅在非 AgileX 主仓场景下使用，可按下文「独立使用」自行创建**同名**功能包。
+> **Scope**: This repository **primarily serves** the main [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros) repository, where it is included as a submodule and installed together with the `agx_arm_description` package in the main repository.  
+> If you are using it outside the AgileX main repository, you can create a package with the **same name** yourself, as described under "Standalone Use" below.
 
 ---
 
-## 支持的型号
+## Supported Models
 
-| 型号 | 目录 | 基础 URDF | 夹爪 Xacro | 灵巧手 Xacro |
+| Model | Directory | Base URDF | Gripper Xacro | Dexterous Hand Xacro |
 |------|------|-----------|------------|--------------|
 | Piper | `piper/` | `piper_description.urdf` | `piper_with_gripper_description.xacro` | `piper_with_left_revo2_description.xacro` / `piper_with_right_revo2_description.xacro` |
 | Piper H | `piper_h/` | `piper_h_description.urdf` | `piper_h_with_gripper_description.xacro` | `piper_h_with_left_revo2_description.xacro` / `piper_h_with_right_revo2_description.xacro` |
 | Piper L | `piper_l/` | `piper_l_description.urdf` | `piper_l_with_gripper_description.xacro` | `piper_l_with_left_revo2_description.xacro` / `piper_l_with_right_revo2_description.xacro` |
 | Piper X | `piper_x/` | `piper_x_description.urdf` | `piper_x_with_gripper_description.xacro` | `piper_x_with_left_revo2_description.xacro` / `piper_x_with_right_revo2_description.xacro` |
 | Nero | `nero/` | `nero_description.urdf` | `nero_with_gripper_description.xacro` | `nero_with_left_revo2_description.xacro` / `nero_with_right_revo2_description.xacro` |
-| AGX 夹爪 | `agx_gripper/` | `agx_gripper_description.urdf` | — | — |
-| Revo2 灵巧手 | `revo2/` | `revo2_left_hand.urdf` / `revo2_right_hand.urdf` | — | — |
+| AGX Gripper | `agx_gripper/` | `agx_gripper_description.urdf` | — | — |
+| Revo2 Dexterous Hand | `revo2/` | `revo2_left_hand.urdf` / `revo2_right_hand.urdf` | — | — |
 
 ---
 
-## 目录结构
+## Directory Structure
 
 ```
 agx_arm_urdf/
@@ -52,31 +52,31 @@ agx_arm_urdf/
 
 ---
 
-## 使用方式
+## Usage
 
-### 推荐：随主仓库使用
+### Recommended: Use with the Main Repository
 
-通过 [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros) 克隆（含子模块）：
+Clone via [agx_arm_ros](https://github.com/agilexrobotics/agx_arm_ros), including submodules:
 
 ```bash
 git clone -b ros2 --recurse-submodules https://github.com/agilexrobotics/agx_arm_ros.git
 ```
 
-在 ROS2 中加载模型进行可视化（launch 由主仓提供）：
+Load a model for visualization in ROS2 (the launch file is provided by the main repository):
 
 ```bash
 ros2 launch agx_arm_description display.launch.py arm_type:=piper
 ```
 
-更多用法请参阅 [agx_arm_ros 文档](https://github.com/agilexrobotics/agx_arm_ros)。
+For more usage details, see the [agx_arm_ros documentation](https://github.com/agilexrobotics/agx_arm_ros).
 
 ---
 
-### 独立使用（自建工作空间）
+### Standalone Use (Your Own Workspace)
 
-在不使用整个 `agx_arm_ros` 时，仍可只克隆本仓库，但需自己提供 **ROS 功能包**，且功能包**名称**必须为：`agx_arm_description`
+If you are not using the full `agx_arm_ros`, you can still clone only this repository, but you must provide the **ROS package** yourself, and the package **name** must be: `agx_arm_description`
 
-#### ROS 2（ament_cmake）
+#### ROS 2 (ament_cmake)
 
 ```bash
 mkdir -p ~/ws/src && cd ~/ws/src
@@ -85,7 +85,7 @@ cd agx_arm_description
 git clone https://github.com/agilexrobotics/agx_arm_urdf.git agx_arm_urdf
 ```
 
-在包内 `CMakeLists.txt` 中配置：
+Add the following to the package's `CMakeLists.txt`:
 
 ```cmake
 install(DIRECTORY agx_arm_urdf
@@ -93,7 +93,7 @@ install(DIRECTORY agx_arm_urdf
 )
 ```
 
-然后：
+Then:
 
 ```bash
 cd ~/ws
@@ -101,7 +101,7 @@ colcon build --packages-select agx_arm_description
 source install/setup.bash
 ```
 
-#### ROS 1（catkin）
+#### ROS 1 (catkin)
 
 ```bash
 mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/src
@@ -110,7 +110,7 @@ cd agx_arm_description
 git clone https://github.com/agilexrobotics/agx_arm_urdf.git agx_arm_urdf
 ```
 
-在包内 `CMakeLists.txt` 中配置：
+Add the following to the package's `CMakeLists.txt`:
 
 ```cmake
 install(DIRECTORY agx_arm_urdf
@@ -118,16 +118,16 @@ install(DIRECTORY agx_arm_urdf
 )
 ```
 
-然后：
+Then:
 
 ```bash
 cd ~/catkin_ws
-catkin_make   # 或 catkin build
+catkin_make   # or catkin build
 source devel/setup.bash
 ```
 
 ---
 
-## 许可证
+## License
 
-本项目基于 [MIT License](./LICENSE) 发布。
+This project is released under the [MIT License](./LICENSE).
